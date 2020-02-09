@@ -1,0 +1,35 @@
+<html ng-app="my-app">
+    <head>
+        <link rel="stylesheet" href="bootstrap.min.css" />
+        <script src="angular.min.js"></script>
+        <script src="util.js"></script>
+        <script src="popup.js"></script>
+    </head>
+    <body>
+        <center>
+        <p><input type="button" id="play" value="Play" /></p>
+        <p></p>
+        <p><input type="button" id="stop" value="Stop" /></p>
+        <p></p>
+        <p><input type="button" id="playone" value="Play One" /></p>
+        <p></p>
+        <p><input type="button" id="playall" value="Play All" /></p>
+        <p></p>
+        <p><input type="button" id="exportimport" value="Export/Import" /></p>
+        </center>
+
+        <div ng-controller="PopupCtrl">
+            <div class="list-group">
+                <button type="button" ng-repeat="step in steps track by $index" class="list-group-item list-group-item-action{{$index == selectedStep?' active':''}}" ng-click="selectStep($index)">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p><b>Step #{{$index}}{{step.command == "click"?" - Click":(step.command == "enterkey"?" - Input":"")}}</b></p>
+                        <span class="badge badge-pill" ng-click="clickX($index);$event.stopPropagation();">X</span>
+                    </div>
+                    <p></p>
+                    <div style="margin-left: 30px;"><img src="{{step.image}}" style="max-width: 300px; max-height: 75px;" /></div>
+                </button>
+            </div>
+        </div>
+
+    </body>
+</html>
