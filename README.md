@@ -1,7 +1,9 @@
 # webhelperextension
 Automate your browser!
 
-This is a Chrome extension that allows you to automate clicking, typing, and entering data into websites. It was specifically designed to efficiently download many bank transaction data files (bank account, credit card) from a bunch of different bank website but it could be used for a variety of similar tasks. It generally works well even if you launch an automation task and then continue using Chrome for other stuff in another tab while the automation continues.
+This is a Chrome extension that allows you to automate clicking, typing, and entering data into websites. It was specifically designed to efficiently download many bank transaction data files (bank account, credit card) from a bunch of different bank website but it could be used for a variety of similar tasks. It generally works well even if you launch an automation task and then continue using Chrome for other stuff in another tab while the automation continues. 
+
+Note: A key benefit of using this approach for downloading things from banks is that using your trusted web browser session usually allows entry into bank websites without being stopped for 2-factor authentication requests. Using many other automation approaches (e.g. webdriver) involve using separate "clean" web browsing contexts for automation which most bank websites will not trust and will require 2-factor auth every time you try to run automation with them. Disclaimer: make sure you are not breaking your bank website's terms of service by using automation to log into their website or at least understand that they can take revoke your online login privileges or shutdown your account if they catch you. All data entry fields are stored in plaintext locally within your webbrower's local storage area which is not secure from other people who have access to your computer. Only use this automation for banks if you keep your computer session secure from anybody who you don't want logging into your bank.
 
 Instructions to use:
 
@@ -12,7 +14,7 @@ To add this extension to your web browser follow these steps:
 
 You should now have a "W" available in the upper-right corner of Chrome.
 
-To begin "recording" actions for later automation, browse to any website. Hover your mouse over any part of the website and then press the following key combination "Crtl-alt-w" This will bring a prompt window up.  You now have the opportunity to choose from 3 types of actions to automate:
+To begin "recording" actions for later automation, browse to any website. Hover your mouse over any part of the website and then press the following key combination "Crtl-alt-w" This will bring a prompt window up. You now have the opportunity to choose from 3 types of actions to automate:
 * If you had selected a text field, you may enter text into the prompt which will be entered.
 * If you had hovered over a clickable element, you may leave the prompt blank to click it.
 * If you had hovered over a select dropdown, you may use any text within the option and enter it. webhelperextension will search all options and find the first matching one and then select it.
