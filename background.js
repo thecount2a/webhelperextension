@@ -51,6 +51,7 @@ const browseAction = async function(tabId, allFlag = false, numSteps = -1, pause
     playing[tabId] = true;
     let stepsRun = 0;
     let inprogress = 0;
+    let setStepBackward = false;
     while (waiting < tries && (numSteps == -1 || stepsRun < numSteps))
     {
         if (allFlag && currentStep[tabId] == 0 && waiting == 0)
@@ -186,6 +187,9 @@ const browseAction = async function(tabId, allFlag = false, numSteps = -1, pause
 
             if (result && result.bounds && result.bounds.width > 0 && result.bounds.height > 0)
             {
+                // Reset setStepBackward since we found something to action
+                setStepBackward = false;
+
                 if (pauseMs)
                 {
                     await timeout(pauseMs);
@@ -314,10 +318,11 @@ const browseAction = async function(tabId, allFlag = false, numSteps = -1, pause
 
                 // If we've been waiting for 75% of the total time we're going to wait, try setting the step backwards
                 //  and see if we re-running the previous step gets us going again.
-                if (waiting > tries * 0.75 && currentStep[tabId] > 0)
+                if (!setStepBackward && waiting > tries * 0.75 && currentStep[tabId] > 0)
                 {
                     currentStep[tabId]--;
                     stepsRun--;
+                    setStepBackward = true;
                     console.log("Set the step backwards to re-try previous step");
                 }
             }
@@ -327,6 +332,12 @@ const browseAction = async function(tabId, allFlag = false, numSteps = -1, pause
             waiting++;
         }
     }
+    if (setStepBackward)
+    {
+        // We we set step backward, let's set it back forwards now so the user knows where we got stuck
+        currentStep[tabId]++;
+    }
+
     if (waiting >= tries)
     {
         if (inprogress > 0)
