@@ -311,6 +311,15 @@ const browseAction = async function(tabId, allFlag = false, numSteps = -1, pause
             else
             {
                 waiting++;
+
+                // If we've been waiting for 75% of the total time we're going to wait, try setting the step backwards
+                //  and see if we re-running the previous step gets us going again.
+                if (waiting > tries * 0.75 && currentStep[tabId] > 0)
+                {
+                    currentStep[tabId]--;
+                    stepsRun--;
+                    console.log("Set the step backwards to re-try previous step");
+                }
             }
         }
         else
